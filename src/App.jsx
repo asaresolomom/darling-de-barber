@@ -1,7 +1,7 @@
-
 import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
+import BusinessExtras from './BusinessExtras';
 
 const photo = (file) =>
   `https://crossroadclippers.com/assets/images/${file}`;
@@ -65,7 +65,7 @@ export default function App() {
     try {
       localStorage.setItem('darling-barber-theme', theme);
     } catch {
-      // The website still works if browser storage is unavailable.
+      // Website remains functional if storage is unavailable.
     }
   }, [theme]);
 
@@ -169,6 +169,7 @@ export default function App() {
           <a href="#about">About</a>
           <a href="#haircuts">Haircut Styles</a>
           <a href="#location">Location</a>
+          <a href="#opening-hours">Opening Hours</a>
           <a href="#booking">Booking</a>
           <a className="nav-cta" href="#haircuts">
             Choose Your Cut ↗
@@ -273,9 +274,11 @@ export default function App() {
         <section className="haircuts-section section" id="haircuts">
           <div className="section-heading">
             <p className="eyebrow">YOUR LOOK. YOUR CHOICE.</p>
+
             <h2>
               CHOOSE YOUR <em>HAIRCUT</em>
             </h2>
+
             <p>
               Browse the photos, read the style names, and select your
               favourite to start your appointment request.
@@ -358,6 +361,8 @@ export default function App() {
         </section>
 
         <LocationSection onLocationChange={setCustomerLocation} />
+
+        <BusinessExtras />
 
         <section className="booking section" id="booking">
           <div className="booking-copy">
@@ -468,8 +473,7 @@ export default function App() {
             </p>
 
             <p className="form-intro">
-              Location selected above:
-              {' '}
+              Location selected above:{' '}
               {customerLocation.location || 'Not provided'}
             </p>
 
@@ -488,9 +492,11 @@ export default function App() {
 
         <section className="closing">
           <p className="eyebrow">YOUR CHAIR IS WAITING</p>
+
           <h2>
             STAY SHARP. <em>STAY DARLING.</em>
           </h2>
+
           <a href="#haircuts" className="button button-gold">
             FIND YOUR NEXT CUT ↗
           </a>
@@ -504,7 +510,10 @@ export default function App() {
         </a>
 
         <p>Crafted for confidence. Built around your style.</p>
-        <a href="#home" className="back-top">BACK TO TOP ↑</a>
+
+        <a href="#home" className="back-top">
+          BACK TO TOP ↑
+        </a>
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} DARLING DE BARBER</span>

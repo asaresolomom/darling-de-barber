@@ -1,4 +1,3 @@
-
 :root {
   font-family: "Segoe UI", Arial, sans-serif;
   color: #f5f1e8;
@@ -813,6 +812,10 @@ h2 em {
 
   .menu-toggle {
     display: block;
+    background: transparent;
+    color: var(--gold);
+    border: 1px solid #6b5732;
+    padding: 9px 12px;
   }
 
   .nav {
@@ -926,11 +929,7 @@ h2 em {
   }
 }
 
-
-
-
 /* GOOGLE MAPS AND CUSTOMER LOCATION */
-
 .location-section {
   padding: 90px 6%;
   background: var(--section-bg, #101010);
