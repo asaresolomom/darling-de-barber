@@ -1102,3 +1102,156 @@ h2 em {
     padding: 22px;
   }
 }
+
+
+
+
+/* ===== Premium smooth entrance animations ===== */
+
+@keyframes smoothRise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes smoothFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-on-load {
+  opacity: 0;
+  animation: smoothRise 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.animate-delay-2 {
+  animation-delay: 0.45s;
+}
+
+.animate-delay-3 {
+  animation-delay: 0.7s;
+}
+
+.animate-delay-4 {
+  animation-delay: 0.95s;
+}
+
+/* Respect visitors who prefer less animation */
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-load {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+}
+
+
+
+/* ==========================================
+   DARLING DE BARBER — SMOOTH ANIMATIONS
+========================================== */
+
+@keyframes darlingRise {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes darlingFade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-on-load {
+  animation: darlingRise 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.delay-1 {
+  animation-delay: 0.15s;
+}
+
+.delay-2 {
+  animation-delay: 0.35s;
+}
+
+.delay-3 {
+  animation-delay: 0.60s;
+}
+
+.delay-4 {
+  animation-delay: 0.85s;
+}
+
+.delay-5 {
+  animation-delay: 1.10s;
+}
+
+/* Smooth hover effects */
+
+.button,
+.book-style-button,
+.haircut-filter {
+  transition:
+    transform 0.3s ease,
+    background-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button:hover,
+.book-style-button:hover {
+  transform: translateY(-3px);
+}
+
+.haircut-card {
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.haircut-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Avoid animations for visitors who request reduced motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-load {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .button,
+  .book-style-button,
+  .haircut-filter,
+  .haircut-card {
+    transition: none;
+  }
+}

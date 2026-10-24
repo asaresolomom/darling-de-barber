@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
@@ -65,7 +66,7 @@ export default function App() {
     try {
       localStorage.setItem('darling-barber-theme', theme);
     } catch {
-      // Website remains functional if storage is unavailable.
+      // The website still works if local storage is unavailable.
     }
   }, [theme]);
 
@@ -141,7 +142,7 @@ export default function App() {
 
   return (
     <div className={`site theme-${theme}`}>
-      <div className="topbar">
+      <div className="topbar animate-on-load">
         PREMIUM GROOMING · CONFIDENCE IN EVERY CUT
       </div>
 
@@ -191,21 +192,23 @@ export default function App() {
           <div className="hero-shade" />
 
           <div className="hero-content">
-            <p className="eyebrow">✦ THE ART OF LOOKING SHARP</p>
+            <p className="eyebrow animate-on-load delay-1">
+              ✦ THE ART OF LOOKING SHARP
+            </p>
 
-            <h1>
+            <h1 className="animate-on-load delay-2">
               YOUR STYLE.
               <br />
               <em>YOUR STATEMENT.</em>
             </h1>
 
-            <p className="hero-description">
+            <p className="hero-description animate-on-load delay-3">
               Discover your next haircut. From clean fades and sharp
               Ghanaian-style line-ups to classic cuts, find a look that
               fits your confidence.
             </p>
 
-            <div className="hero-actions">
+            <div className="hero-actions animate-on-load delay-4">
               <a href="#haircuts" className="button button-gold">
                 FIND YOUR HAIRCUT ↗
               </a>
@@ -214,12 +217,12 @@ export default function App() {
               </a>
             </div>
 
-            <div className="hero-note">
+            <div className="hero-note animate-on-load delay-5">
               ✦ PRECISION CUTS. PREMIUM SERVICE. YOUR BEST LOOK.
             </div>
           </div>
 
-          <div className="hero-caption">
+          <div className="hero-caption animate-on-load delay-5">
             DARLING DE BARBER — YOUR STYLE, PERFECTED
           </div>
         </section>
