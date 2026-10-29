@@ -1,3 +1,4 @@
+
 {
   "name": "darling-de-barber",
   "private": true,
@@ -5,7 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "predev": "node scripts/generate-haircut-manifest.mjs",
     "build": "vite build",
+    "prebuild": "node scripts/generate-haircut-manifest.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

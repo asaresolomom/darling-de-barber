@@ -3,6 +3,14 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
 import BusinessExtras from './BusinessExtras';
+import originalHaircutFiles from './haircuts-manifest.json';
+
+const originalHaircuts = originalHaircutFiles.map((filename, index) => ({
+  id: index + 1,
+  name: `Style ${String(index + 1).padStart(3, '0')}`,
+  image: `/haircuts/${encodeURIComponent(filename)}`,
+  filename,
+}));
 
 const photo = (file) =>
   `https://crossroadclippers.com/assets/images/${file}`;
@@ -20,10 +28,32 @@ const haircuts = [
   { name: 'Braids & Beard Style', price: 90, category: 'Locs & Braids', image: photo('newimage.jpeg'), description: 'Braided styling with a groomed beard.' },
   { name: 'Haircut & Beard', price: 90, category: 'Beard & Grooming', image: photo('newimage5.jpeg'), description: 'A full haircut and beard refresh.' },
   { name: 'Beard Trim & Line-up', price: 35, category: 'Beard & Grooming', image: photo('crossroad1.jpeg'), description: 'Detailed beard shaping and sharp edges.' },
+  {
+    name: 'Classic Buzz Cut & Beard',
+    price: 45,
+    category: 'Our Real Work',
+    image: '/haircuts/ob.jpeg',
+    description: 'A clean short haircut with a shaped full beard.',
+  },
+  {
+    name: 'Ladies Natural Taper Cut',
+    price: 50,
+    category: 'Our Real Work',
+    image: '/haircuts/ty.jpeg',
+    description: 'A beautiful natural short haircut with a clean hairline.',
+  },
+  {
+    name: 'Burgundy Textured Cut & Design',
+    price: 70,
+    category: 'Our Real Work',
+    image: '/haircuts/bv.jpeg',
+    description: 'A burgundy textured haircut with a stylish side design.',
+  },
 ];
 
 const categories = [
   'All Styles',
+  'Our Real Work',
   'Fades',
   'Afro & Natural',
   'Classic Cuts',
@@ -33,6 +63,135 @@ const categories = [
 ];
 
 const WHATSAPP_NUMBER = '233532107834';
+
+function OriginalHaircutGallery() {
+  const [activePhoto, setActivePhoto] = useState(null);
+
+  function requestStyle(style) {
+    const message = [
+      'Hello DARLING DE BARBER!',
+      '',
+      'I saw a hairstyle in your original work gallery.',
+      '',
+      `Selected hairstyle: ${style.name}`,
+      `Photo reference: ${style.filename}`,
+      '',
+      'Please confirm the price and availability for this style.',
+    ].join('\n');
+
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+
+  useEffect(() => {
+    if (!activePhoto) return;
+
+    function closeOnEscape(event) {
+      if (event.key === 'Escape') setActivePhoto(null);
+    }
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [activePhoto]);
+
+  return (
+    <section className="original-gallery section" id="original-work">
+      <div className="section-heading">
+        <p className="eyebrow">✦ AUTHENTIC DARLING DE BARBER HAIRSTYLES</p>
+        <h2>OUR <em>REAL WORK.</em></h2>
+        <p>
+          Explore our original haircut collection. Choose your favourite
+          style and send its reference number directly to our barber.
+        </p>
+      </div>
+
+      <div className="gallery-count">
+        {originalHaircuts.length} ORIGINAL STYLES
+      </div>
+
+      {originalHaircuts.length === 0 ? (
+        <p className="gallery-empty">
+          No photos found. Add your images to public/haircuts.
+        </p>
+      ) : (
+        <div className="original-gallery-grid">
+          {originalHaircuts.map((style) => (
+            <article className="original-gallery-card" key={style.filename}>
+              <div className="original-gallery-image">
+                <img
+                  src={style.image}
+                  alt={`${style.name} haircut by Darling De Barber`}
+                  loading="lazy"
+                />
+                <span className="original-gallery-number">{style.name}</span>
+              </div>
+
+              <div className="original-gallery-info">
+                <h3>{style.name}</h3>
+                <p>Original Darling De Barber hairstyle</p>
+
+                <div className="original-gallery-actions">
+                  <button
+                    type="button"
+                    className="gallery-view-button"
+                    onClick={() => setActivePhoto(style)}
+                  >
+                    VIEW PHOTO
+                  </button>
+                  <button
+                    type="button"
+                    className="gallery-book-button"
+                    onClick={() => requestStyle(style)}
+                  >
+                    REQUEST STYLE ↗
+                  </button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      )}
+
+      {activePhoto && (
+        <div
+          className="gallery-modal"
+          role="presentation"
+          onClick={() => setActivePhoto(null)}
+        >
+          <div
+            className="gallery-modal-content"
+            role="dialog"
+            aria-modal="true"
+            aria-label={activePhoto.name}
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="gallery-modal-close"
+              onClick={() => setActivePhoto(null)}
+              aria-label="Close photo"
+            >
+              ✕
+            </button>
+
+            <img src={activePhoto.image} alt={activePhoto.name} />
+
+            <div className="gallery-modal-bottom">
+              <h3>{activePhoto.name}</h3>
+              <button
+                type="button"
+                className="gallery-book-button"
+                onClick={() => requestStyle(activePhoto)}
+              >
+                REQUEST THIS STYLE ↗
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -95,11 +254,7 @@ export default function App() {
 
   function chooseCut(cut) {
     setSelectedStyle(cut.name);
-
-    setForm((previous) => ({
-      ...previous,
-      service: cut.name,
-    }));
+    setForm((previous) => ({ ...previous, service: cut.name }));
 
     document.getElementById('booking')?.scrollIntoView({
       behavior: 'smooth',
@@ -107,9 +262,7 @@ export default function App() {
   }
 
   function toggleTheme() {
-    setTheme((current) =>
-      current === 'dark' ? 'light' : 'dark'
-    );
+    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
   }
 
   function submitBooking(event) {
@@ -134,9 +287,7 @@ export default function App() {
       'Please confirm availability for my appointment.',
     ].join('\n');
 
-    const url =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
@@ -169,12 +320,11 @@ export default function App() {
           <a href="#home">Home</a>
           <a href="#about">About</a>
           <a href="#haircuts">Haircut Styles</a>
+          <a href="#original-work">Our Real Work</a>
           <a href="#location">Location</a>
           <a href="#opening-hours">Opening Hours</a>
           <a href="#booking">Booking</a>
-          <a className="nav-cta" href="#haircuts">
-            Choose Your Cut ↗
-          </a>
+          <a className="nav-cta" href="#haircuts">Choose Your Cut ↗</a>
         </nav>
 
         <button
@@ -240,7 +390,6 @@ export default function App() {
               alt="Barbershop haircut reference"
               loading="lazy"
             />
-
             <div className="image-label">
               <span>THE</span>
               <b>DETAIL</b>
@@ -250,7 +399,6 @@ export default function App() {
 
           <div className="about-copy">
             <p className="eyebrow">WELCOME TO DARLING DE BARBER</p>
-
             <h2>
               GOOD HAIR.
               <br />
@@ -262,7 +410,6 @@ export default function App() {
               choose the look you love, and request an appointment with
               your preferred style already selected.
             </p>
-
             <p>
               From everyday clean cuts to bold fades and beard grooming,
               your next look starts here.
@@ -277,11 +424,7 @@ export default function App() {
         <section className="haircuts-section section" id="haircuts">
           <div className="section-heading">
             <p className="eyebrow">YOUR LOOK. YOUR CHOICE.</p>
-
-            <h2>
-              CHOOSE YOUR <em>HAIRCUT</em>
-            </h2>
-
+            <h2>CHOOSE YOUR <em>HAIRCUT</em></h2>
             <p>
               Browse the photos, read the style names, and select your
               favourite to start your appointment request.
@@ -293,11 +436,7 @@ export default function App() {
               <button
                 key={item}
                 type="button"
-                className={
-                  category === item
-                    ? 'haircut-filter active'
-                    : 'haircut-filter'
-                }
+                className={category === item ? 'haircut-filter active' : 'haircut-filter'}
                 onClick={() => setCategory(item)}
               >
                 {item}
@@ -308,11 +447,7 @@ export default function App() {
           <div className="haircut-grid">
             {visibleCuts.map((cut) => (
               <article
-                className={
-                  selectedStyle === cut.name
-                    ? 'haircut-card selected'
-                    : 'haircut-card'
-                }
+                className={selectedStyle === cut.name ? 'haircut-card selected' : 'haircut-card'}
                 key={cut.name}
               >
                 <div className="haircut-photo">
@@ -327,10 +462,7 @@ export default function App() {
                       }
                     }}
                   />
-
-                  <span className="haircut-category">
-                    {cut.category}
-                  </span>
+                  <span className="haircut-category">{cut.category}</span>
                 </div>
 
                 <div className="haircut-info">
@@ -338,18 +470,13 @@ export default function App() {
                   <p>{cut.description}</p>
 
                   <div className="haircut-bottom">
-                    <span className="haircut-price">
-                      GH₵{cut.price}
-                    </span>
-
+                    <span className="haircut-price">GH₵{cut.price}</span>
                     <button
                       type="button"
                       className="book-style-button"
                       onClick={() => chooseCut(cut)}
                     >
-                      {selectedStyle === cut.name
-                        ? 'SELECTED ✓'
-                        : 'BOOK THIS STYLE ↗'}
+                      {selectedStyle === cut.name ? 'SELECTED ✓' : 'BOOK THIS STYLE ↗'}
                     </button>
                   </div>
                 </div>
@@ -363,6 +490,8 @@ export default function App() {
           </p>
         </section>
 
+        <OriginalHaircutGallery />
+
         <LocationSection onLocationChange={setCustomerLocation} />
 
         <BusinessExtras />
@@ -370,13 +499,11 @@ export default function App() {
         <section className="booking section" id="booking">
           <div className="booking-copy">
             <p className="eyebrow">YOUR NEXT LOOK STARTS HERE</p>
-
             <h2>
               READY FOR A
               <br />
               <em>FRESH CUT?</em>
             </h2>
-
             <p>
               Your chosen haircut appears in the form. Enter your preferred
               date and time to prepare a WhatsApp appointment request.
@@ -391,7 +518,6 @@ export default function App() {
 
           <form className="booking-form" onSubmit={submitBooking}>
             <h3>REQUEST AN APPOINTMENT</h3>
-
             <p className="form-intro">
               Complete your details to continue to WhatsApp.
               The barber must confirm your appointment.
@@ -476,14 +602,10 @@ export default function App() {
             </p>
 
             <p className="form-intro">
-              Location selected above:{' '}
-              {customerLocation.location || 'Not provided'}
+              Location selected above: {customerLocation.location || 'Not provided'}
             </p>
 
-            <button
-              type="submit"
-              className="button button-gold submit-button"
-            >
+            <button type="submit" className="button button-gold submit-button">
               CONTINUE TO WHATSAPP ↗
             </button>
 
@@ -495,11 +617,7 @@ export default function App() {
 
         <section className="closing">
           <p className="eyebrow">YOUR CHAIR IS WAITING</p>
-
-          <h2>
-            STAY SHARP. <em>STAY DARLING.</em>
-          </h2>
-
+          <h2>STAY SHARP. <em>STAY DARLING.</em></h2>
           <a href="#haircuts" className="button button-gold">
             FIND YOUR NEXT CUT ↗
           </a>
@@ -513,10 +631,7 @@ export default function App() {
         </a>
 
         <p>Crafted for confidence. Built around your style.</p>
-
-        <a href="#home" className="back-top">
-          BACK TO TOP ↑
-        </a>
+        <a href="#home" className="back-top">BACK TO TOP ↑</a>
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} DARLING DE BARBER</span>
