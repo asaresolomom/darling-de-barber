@@ -16,18 +16,90 @@ const photo = (file) =>
   `https://crossroadclippers.com/assets/images/${file}`;
 
 const haircuts = [
-  { name: 'Low Fade', price: 50, category: 'Fades', image: photo('newimage3.jpeg'), description: 'A clean low fade with a sharp finish.' },
-  { name: 'Mid Fade & Beard', price: 60, category: 'Fades', image: photo('newimage4.jpeg'), description: 'A balanced fade with a defined beard.' },
-  { name: 'High Skin Fade', price: 70, category: 'Fades', image: photo('crossroad1.jpeg'), description: 'A bold skin fade with a crisp outline.' },
-  { name: 'Taper Fade', price: 60, category: 'Fades', image: photo('crossroad2.jpeg'), description: 'A neat taper around the temples and neckline.' },
-  { name: 'Afro Shape-up', price: 50, category: 'Afro & Natural', image: photo('newimage2.jpeg'), description: 'Natural texture shaped with a clean outline.' },
-  { name: 'Natural Textured Cut', price: 60, category: 'Afro & Natural', image: photo('newimage1.jpeg'), description: 'A textured natural cut with a tidy finish.' },
-  { name: 'Short Buzz Cut', price: 40, category: 'Classic Cuts', image: photo('newimage3.jpeg'), description: 'A simple, low-maintenance short cut.' },
-  { name: 'Classic Executive Cut', price: 60, category: 'Classic Cuts', image: photo('newimage4%20%282%29.jpeg'), description: 'A polished everyday gentleman’s cut.' },
-  { name: 'Burst Fade / Mohawk', price: 70, category: 'Trendy Cuts', image: photo('newimage2.jpeg'), description: 'A bold textured style.' },
-  { name: 'Braids & Beard Style', price: 90, category: 'Locs & Braids', image: photo('newimage.jpeg'), description: 'Braided styling with a groomed beard.' },
-  { name: 'Haircut & Beard', price: 90, category: 'Beard & Grooming', image: photo('newimage5.jpeg'), description: 'A full haircut and beard refresh.' },
-  { name: 'Beard Trim & Line-up', price: 35, category: 'Beard & Grooming', image: photo('crossroad1.jpeg'), description: 'Detailed beard shaping and sharp edges.' },
+  {
+    name: 'Low Fade',
+    price: 50,
+    category: 'Fades',
+    image: photo('newimage3.jpeg'),
+    description: 'A clean low fade with a sharp finish.',
+  },
+  {
+    name: 'Mid Fade & Beard',
+    price: 60,
+    category: 'Fades',
+    image: photo('newimage4.jpeg'),
+    description: 'A balanced fade with a defined beard.',
+  },
+  {
+    name: 'High Skin Fade',
+    price: 70,
+    category: 'Fades',
+    image: photo('crossroad1.jpeg'),
+    description: 'A bold skin fade with a crisp outline.',
+  },
+  {
+    name: 'Taper Fade',
+    price: 60,
+    category: 'Fades',
+    image: photo('crossroad2.jpeg'),
+    description: 'A neat taper around the temples and neckline.',
+  },
+  {
+    name: 'Afro Shape-up',
+    price: 50,
+    category: 'Afro & Natural',
+    image: photo('newimage2.jpeg'),
+    description: 'Natural texture shaped with a clean outline.',
+  },
+  {
+    name: 'Natural Textured Cut',
+    price: 60,
+    category: 'Afro & Natural',
+    image: photo('newimage1.jpeg'),
+    description: 'A textured natural cut with a tidy finish.',
+  },
+  {
+    name: 'Short Buzz Cut',
+    price: 40,
+    category: 'Classic Cuts',
+    image: photo('newimage3.jpeg'),
+    description: 'A simple, low-maintenance short cut.',
+  },
+  {
+    name: 'Classic Executive Cut',
+    price: 60,
+    category: 'Classic Cuts',
+    image: photo('newimage4%20%282%29.jpeg'),
+    description: 'A polished everyday gentleman’s cut.',
+  },
+  {
+    name: 'Burst Fade / Mohawk',
+    price: 70,
+    category: 'Trendy Cuts',
+    image: photo('newimage2.jpeg'),
+    description: 'A bold textured style.',
+  },
+  {
+    name: 'Braids & Beard Style',
+    price: 90,
+    category: 'Locs & Braids',
+    image: photo('newimage.jpeg'),
+    description: 'Braided styling with a groomed beard.',
+  },
+  {
+    name: 'Haircut & Beard',
+    price: 90,
+    category: 'Beard & Grooming',
+    image: photo('newimage5.jpeg'),
+    description: 'A full haircut and beard refresh.',
+  },
+  {
+    name: 'Beard Trim & Line-up',
+    price: 35,
+    category: 'Beard & Grooming',
+    image: photo('crossroad1.jpeg'),
+    description: 'Detailed beard shaping and sharp edges.',
+  },
   {
     name: 'Classic Buzz Cut & Beard',
     price: 45,
@@ -64,27 +136,11 @@ const categories = [
 
 const WHATSAPP_NUMBER = '233532107834';
 
-function OriginalHaircutGallery() {
+function OriginalHaircutGallery({ onRequestStyle }) {
   const [activePhoto, setActivePhoto] = useState(null);
 
-  function requestStyle(style) {
-    const message = [
-      'Hello DARLING DE BARBER!',
-      '',
-      'I saw a hairstyle in your original work gallery.',
-      '',
-      `Selected hairstyle: ${style.name}`,
-      `Photo reference: ${style.filename}`,
-      '',
-      'Please confirm the price and availability for this style.',
-    ].join('\n');
-
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
-  }
-
   useEffect(() => {
-    if (!activePhoto) return;
+    if (!activePhoto) return undefined;
 
     function closeOnEscape(event) {
       if (event.key === 'Escape') setActivePhoto(null);
@@ -98,10 +154,12 @@ function OriginalHaircutGallery() {
     <section className="original-gallery section" id="original-work">
       <div className="section-heading">
         <p className="eyebrow">✦ AUTHENTIC DARLING DE BARBER HAIRSTYLES</p>
-        <h2>OUR <em>REAL WORK.</em></h2>
+        <h2>
+          OUR <em>REAL WORK.</em>
+        </h2>
         <p>
           Explore our original haircut collection. Choose your favourite
-          style and send its reference number directly to our barber.
+          style, complete the booking form, and send your request to our barber.
         </p>
       </div>
 
@@ -123,7 +181,9 @@ function OriginalHaircutGallery() {
                   alt={`${style.name} haircut by Darling De Barber`}
                   loading="lazy"
                 />
-                <span className="original-gallery-number">{style.name}</span>
+                <span className="original-gallery-number">
+                  {style.name}
+                </span>
               </div>
 
               <div className="original-gallery-info">
@@ -138,10 +198,11 @@ function OriginalHaircutGallery() {
                   >
                     VIEW PHOTO
                   </button>
+
                   <button
                     type="button"
                     className="gallery-book-button"
-                    onClick={() => requestStyle(style)}
+                    onClick={() => onRequestStyle(style)}
                   >
                     REQUEST STYLE ↗
                   </button>
@@ -181,7 +242,10 @@ function OriginalHaircutGallery() {
               <button
                 type="button"
                 className="gallery-book-button"
-                onClick={() => requestStyle(activePhoto)}
+                onClick={() => {
+                  setActivePhoto(null);
+                  onRequestStyle(activePhoto);
+                }}
               >
                 REQUEST THIS STYLE ↗
               </button>
@@ -197,6 +261,9 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState('All Styles');
   const [selectedStyle, setSelectedStyle] = useState('Low Fade');
+
+  // Holds a selected photo from the original gallery.
+  const [originalStyleSelection, setOriginalStyleSelection] = useState(null);
 
   const [theme, setTheme] = useState(() => {
     try {
@@ -246,15 +313,36 @@ export default function App() {
   ].join('-');
 
   function updateForm(event) {
+    const { name, value } = event.target;
+
     setForm((previous) => ({
       ...previous,
-      [event.target.name]: event.target.value,
+      [name]: value,
     }));
+
+    // If the customer chooses a regular haircut, clear any gallery selection.
+    if (name === 'service') {
+      setOriginalStyleSelection(null);
+      setSelectedStyle(value);
+    }
   }
 
   function chooseCut(cut) {
+    setOriginalStyleSelection(null);
     setSelectedStyle(cut.name);
-    setForm((previous) => ({ ...previous, service: cut.name }));
+
+    setForm((previous) => ({
+      ...previous,
+      service: cut.name,
+    }));
+
+    document.getElementById('booking')?.scrollIntoView({
+      behavior: 'smooth',
+    });
+  }
+
+  function requestOriginalStyle(style) {
+    setOriginalStyleSelection(style);
 
     document.getElementById('booking')?.scrollIntoView({
       behavior: 'smooth',
@@ -268,6 +356,19 @@ export default function App() {
   function submitBooking(event) {
     event.preventDefault();
 
+    const haircutDetails = originalStyleSelection
+      ? [
+          'Preferred haircut: Original work gallery style',
+          `Gallery style: ${originalStyleSelection.name}`,
+          `Photo reference: ${originalStyleSelection.filename}`,
+          'Price: Please confirm with the barber',
+          `Other selected service: ${form.service}`,
+        ]
+      : [
+          `Preferred haircut: ${form.service}`,
+          `Estimated price: GH₵${selectedCut.price}`,
+        ];
+
     const message = [
       'Hello DARLING DE BARBER!',
       '',
@@ -275,8 +376,7 @@ export default function App() {
       '',
       `Name: ${form.name.trim()}`,
       `Phone: ${form.phone.trim()}`,
-      `Preferred haircut: ${form.service}`,
-      `Estimated price: GH₵${selectedCut.price}`,
+      ...haircutDetails,
       `Preferred date: ${form.date}`,
       `Preferred time: ${form.time.trim()}`,
       '',
@@ -284,10 +384,13 @@ export default function App() {
       `Area or address: ${customerLocation.location || 'Not provided'}`,
       `Google Maps link: ${customerLocation.mapsLink || 'Not provided'}`,
       '',
-      'Please confirm availability for my appointment.',
+      'Please confirm the price and availability for my appointment.',
     ].join('\n');
 
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const url =
+      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    // WhatsApp opens only after the customer submits the form.
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
@@ -300,7 +403,9 @@ export default function App() {
       <header className="header">
         <a className="brand" href="#home">
           <span className="brand-mark">D</span>
-          <span>DARLING DE <b>BARBER</b></span>
+          <span>
+            DARLING DE <b>BARBER</b>
+          </span>
         </a>
 
         <button
@@ -324,7 +429,9 @@ export default function App() {
           <a href="#location">Location</a>
           <a href="#opening-hours">Opening Hours</a>
           <a href="#booking">Booking</a>
-          <a className="nav-cta" href="#haircuts">Choose Your Cut ↗</a>
+          <a className="nav-cta" href="#haircuts">
+            Choose Your Cut ↗
+          </a>
         </nav>
 
         <button
@@ -424,7 +531,9 @@ export default function App() {
         <section className="haircuts-section section" id="haircuts">
           <div className="section-heading">
             <p className="eyebrow">YOUR LOOK. YOUR CHOICE.</p>
-            <h2>CHOOSE YOUR <em>HAIRCUT</em></h2>
+            <h2>
+              CHOOSE YOUR <em>HAIRCUT</em>
+            </h2>
             <p>
               Browse the photos, read the style names, and select your
               favourite to start your appointment request.
@@ -436,7 +545,11 @@ export default function App() {
               <button
                 key={item}
                 type="button"
-                className={category === item ? 'haircut-filter active' : 'haircut-filter'}
+                className={
+                  category === item
+                    ? 'haircut-filter active'
+                    : 'haircut-filter'
+                }
                 onClick={() => setCategory(item)}
               >
                 {item}
@@ -447,7 +560,11 @@ export default function App() {
           <div className="haircut-grid">
             {visibleCuts.map((cut) => (
               <article
-                className={selectedStyle === cut.name ? 'haircut-card selected' : 'haircut-card'}
+                className={
+                  selectedStyle === cut.name
+                    ? 'haircut-card selected'
+                    : 'haircut-card'
+                }
                 key={cut.name}
               >
                 <div className="haircut-photo">
@@ -476,7 +593,9 @@ export default function App() {
                       className="book-style-button"
                       onClick={() => chooseCut(cut)}
                     >
-                      {selectedStyle === cut.name ? 'SELECTED ✓' : 'BOOK THIS STYLE ↗'}
+                      {selectedStyle === cut.name
+                        ? 'SELECTED ✓'
+                        : 'BOOK THIS STYLE ↗'}
                     </button>
                   </div>
                 </div>
@@ -490,7 +609,7 @@ export default function App() {
           </p>
         </section>
 
-        <OriginalHaircutGallery />
+        <OriginalHaircutGallery onRequestStyle={requestOriginalStyle} />
 
         <LocationSection onLocationChange={setCustomerLocation} />
 
@@ -505,23 +624,61 @@ export default function App() {
               <em>FRESH CUT?</em>
             </h2>
             <p>
-              Your chosen haircut appears in the form. Enter your preferred
-              date and time to prepare a WhatsApp appointment request.
+              Choose a regular haircut or select a photo from our original
+              gallery. Enter your preferred date and time to prepare a
+              WhatsApp appointment request.
             </p>
 
             <div className="selected-cut-summary">
-              <span>YOUR CHOSEN STYLE</span>
-              <h3>{selectedCut.name}</h3>
-              <strong>GH₵{selectedCut.price}</strong>
+              <span>
+                {originalStyleSelection
+                  ? 'YOUR ORIGINAL GALLERY STYLE'
+                  : 'YOUR CHOSEN STYLE'}
+              </span>
+              <h3>
+                {originalStyleSelection
+                  ? originalStyleSelection.name
+                  : selectedCut.name}
+              </h3>
+              <strong>
+                {originalStyleSelection
+                  ? 'Price to be confirmed'
+                  : `GH₵${selectedCut.price}`}
+              </strong>
+              {originalStyleSelection && (
+                <p>
+                  Photo reference: {originalStyleSelection.filename}
+                </p>
+              )}
             </div>
           </div>
 
           <form className="booking-form" onSubmit={submitBooking}>
             <h3>REQUEST AN APPOINTMENT</h3>
             <p className="form-intro">
-              Complete your details to continue to WhatsApp.
-              The barber must confirm your appointment.
+              Complete your details to continue to WhatsApp. The barber
+              must confirm your appointment.
             </p>
+
+            {originalStyleSelection && (
+              <div className="chosen-price">
+                <strong>Selected original gallery style</strong>
+                <p>{originalStyleSelection.name}</p>
+                <p>
+                  Photo reference: {originalStyleSelection.filename}
+                </p>
+                <p>
+                  The barber will confirm the price for this style.
+                </p>
+                <button
+                  type="button"
+                  className="gallery-view-button"
+                  onClick={() => setOriginalStyleSelection(null)}
+                >
+                  CANCEL GALLERY STYLE
+                </button>
+              </div>
+            )}
 
             <label>
               Your full name
@@ -553,10 +710,7 @@ export default function App() {
               <select
                 name="service"
                 value={form.service}
-                onChange={(event) => {
-                  updateForm(event);
-                  setSelectedStyle(event.target.value);
-                }}
+                onChange={updateForm}
               >
                 {haircuts.map((cut) => (
                   <option key={cut.name} value={cut.name}>
@@ -566,9 +720,11 @@ export default function App() {
               </select>
             </label>
 
-            <div className="chosen-price">
-              Estimated price: <strong>GH₵{selectedCut.price}</strong>
-            </div>
+            {!originalStyleSelection && (
+              <div className="chosen-price">
+                Estimated price: <strong>GH₵{selectedCut.price}</strong>
+              </div>
+            )}
 
             <div className="form-row">
               <label>
@@ -602,10 +758,14 @@ export default function App() {
             </p>
 
             <p className="form-intro">
-              Location selected above: {customerLocation.location || 'Not provided'}
+              Location selected above:{' '}
+              {customerLocation.location || 'Not provided'}
             </p>
 
-            <button type="submit" className="button button-gold submit-button">
+            <button
+              type="submit"
+              className="button button-gold submit-button"
+            >
               CONTINUE TO WHATSAPP ↗
             </button>
 
@@ -617,7 +777,9 @@ export default function App() {
 
         <section className="closing">
           <p className="eyebrow">YOUR CHAIR IS WAITING</p>
-          <h2>STAY SHARP. <em>STAY DARLING.</em></h2>
+          <h2>
+            STAY SHARP. <em>STAY DARLING.</em>
+          </h2>
           <a href="#haircuts" className="button button-gold">
             FIND YOUR NEXT CUT ↗
           </a>
@@ -627,11 +789,15 @@ export default function App() {
       <footer className="footer">
         <a className="brand" href="#home">
           <span className="brand-mark">D</span>
-          <span>DARLING DE <b>BARBER</b></span>
+          <span>
+            DARLING DE <b>BARBER</b>
+          </span>
         </a>
 
         <p>Crafted for confidence. Built around your style.</p>
-        <a href="#home" className="back-top">BACK TO TOP ↑</a>
+        <a href="#home" className="back-top">
+          BACK TO TOP ↑
+        </a>
 
         <div className="footer-bottom">
           <span>© {new Date().getFullYear()} DARLING DE BARBER</span>
