@@ -44,7 +44,7 @@ const haircuts = [
     description: 'A textured natural cut with a tidy finish.',
   },
   {
-    name: 'Short Buzz Cut',
+    name: 'Blonde dyed Buzz Cut',
     category: 'Classic Cuts',
     image: '/haircuts/Blonde dyed buzz cut.jpeg',
     description: 'A simple, low-maintenance haircut with a clean finish.',
@@ -79,6 +79,47 @@ const haircuts = [
     image: '/haircuts/Low skin fade with crisp shape-up.jpeg',
     description: 'Detailed beard shaping with clean, sharp edges.',
   },
+
+  {
+    name: 'Dread Locs with Mid Fade',
+    category: 'Locs & Braids',
+    image: '/haircuts/Dread Locs with mid fade.jpeg',
+    description: 'A stylish dread locs look with a clean mid fade.',
+  },
+
+  {
+    name: 'Low Taper Fade',
+    category: 'Fades',
+    image: '/haircuts/Low Taper.jpeg',
+    description: 'A subtle taper fade for a refined appearance.',
+  },
+ {
+  name:"vibrant blonde fade",
+  category:"Fades",
+image:"/haircuts/vibrant magenta textured crop with taper.jpeg",
+  description:"A bold and stylish fade with vibrant blonde highlights."
+ },
+
+ {
+  name:"Designer heart fade",
+  category:"Fades",
+  image:"/haircuts/designer heart Fade.jpeg",
+  description:"low fade with nice heart design"
+ },
+
+  {
+  name:"Low taper fade",
+  category:"Fades",
+  image:"/haircuts/low taper back view.jpeg",
+  description:"low taper Back view",
+ },
+
+  {
+  name:"Low taper fade",
+  category:"Fades",
+  image:"/haircuts/Short locks with mid Fade.jpeg",
+  description:"short locks with mid fade",
+ },
 ];
 
 
