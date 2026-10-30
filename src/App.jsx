@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
 import BusinessExtras from './BusinessExtras';
-import originalHaircutFiles from './haircuts-manifest.json';
 
 // Use each renamed image filename as its gallery title.
+import originalHaircutFiles from './haircuts-manifest.json';
+
 const originalHaircuts = originalHaircutFiles.map((filename, index) => {
   const name = filename
     .replace(/\.[^/.]+$/, '')
@@ -28,105 +29,90 @@ const photo = (file) =>
 const haircuts = [
   {
     name: 'Low Fade',
-    price: 50,
     category: 'Fades',
     image: photo('newimage3.jpeg'),
     description: 'A clean low fade with a sharp finish.',
   },
   {
     name: 'Mid Fade & Beard',
-    price: 60,
     category: 'Fades',
     image: photo('newimage4.jpeg'),
     description: 'A balanced fade with a defined beard.',
   },
   {
     name: 'High Skin Fade',
-    price: 70,
     category: 'Fades',
     image: photo('crossroad1.jpeg'),
     description: 'A bold skin fade with a crisp outline.',
   },
   {
     name: 'Taper Fade',
-    price: 60,
     category: 'Fades',
     image: photo('crossroad2.jpeg'),
     description: 'A neat taper around the temples and neckline.',
   },
   {
     name: 'Afro Shape-up',
-    price: 50,
     category: 'Afro & Natural',
     image: photo('newimage2.jpeg'),
     description: 'Natural texture shaped with a clean outline.',
   },
   {
     name: 'Natural Textured Cut',
-    price: 60,
     category: 'Afro & Natural',
     image: photo('newimage1.jpeg'),
     description: 'A textured natural cut with a tidy finish.',
   },
   {
     name: 'Short Buzz Cut',
-    price: 40,
     category: 'Classic Cuts',
     image: photo('newimage3.jpeg'),
     description: 'A simple, low-maintenance short cut.',
   },
   {
     name: 'Classic Executive Cut',
-    price: 60,
     category: 'Classic Cuts',
     image: photo('newimage4%20%282%29.jpeg'),
     description: 'A polished everyday gentleman’s cut.',
   },
   {
     name: 'Burst Fade / Mohawk',
-    price: 70,
     category: 'Trendy Cuts',
     image: photo('newimage2.jpeg'),
     description: 'A bold textured style.',
   },
   {
     name: 'Braids & Beard Style',
-    price: 90,
     category: 'Locs & Braids',
     image: photo('newimage.jpeg'),
     description: 'Braided styling with a groomed beard.',
   },
   {
     name: 'Haircut & Beard',
-    price: 90,
     category: 'Beard & Grooming',
     image: photo('newimage5.jpeg'),
     description: 'A full haircut and beard refresh.',
   },
   {
     name: 'Beard Trim & Line-up',
-    price: 35,
     category: 'Beard & Grooming',
     image: photo('crossroad1.jpeg'),
     description: 'Detailed beard shaping and sharp edges.',
   },
   {
     name: 'Classic Buzz Cut & Beard',
-    price: 45,
     category: 'Our Real Work',
     image: '/haircuts/ob.jpeg',
     description: 'A clean short haircut with a shaped full beard.',
   },
   {
     name: 'Ladies Natural Taper Cut',
-    price: 50,
     category: 'Our Real Work',
     image: '/haircuts/ty.jpeg',
     description: 'A beautiful natural short haircut with a clean hairline.',
   },
   {
     name: 'Burgundy Textured Cut & Design',
-    price: 70,
     category: 'Our Real Work',
     image: '/haircuts/bv.jpeg',
     description: 'A burgundy textured haircut with a stylish side design.',
@@ -367,12 +353,10 @@ export default function App() {
           'Preferred haircut: Original work gallery style',
           `Gallery style: ${originalStyleSelection.name}`,
           `Photo reference: ${originalStyleSelection.filename}`,
-          'Price: Please confirm with the barber',
           `Other selected service: ${form.service}`,
         ]
       : [
           `Preferred haircut: ${form.service}`,
-          `Estimated price: GH₵${selectedCut.price}`,
         ];
 
     const message = [
@@ -390,7 +374,7 @@ export default function App() {
       `Area or address: ${customerLocation.location || 'Not provided'}`,
       `Google Maps link: ${customerLocation.mapsLink || 'Not provided'}`,
       '',
-      'Please confirm the price and availability for my appointment.',
+      'Please confirm availability for my appointment.',
     ].join('\n');
 
     const url =
@@ -592,7 +576,6 @@ export default function App() {
                   <p>{cut.description}</p>
 
                   <div className="haircut-bottom">
-                    <span className="haircut-price">GH₵{cut.price}</span>
                     <button
                       type="button"
                       className="book-style-button"
@@ -607,11 +590,6 @@ export default function App() {
               </article>
             ))}
           </div>
-
-          <p className="price-note">
-            Prices are examples and should be confirmed by the shop owner.
-            Make sure you have permission to use any third-party haircut photos.
-          </p>
         </section>
 
         <OriginalHaircutGallery onRequestStyle={requestOriginalStyle} />
@@ -645,11 +623,7 @@ export default function App() {
                   ? originalStyleSelection.name
                   : selectedCut.name}
               </h3>
-              <strong>
-                {originalStyleSelection
-                  ? 'Price to be confirmed'
-                  : `GH₵${selectedCut.price}`}
-              </strong>
+
               {originalStyleSelection && (
                 <p>
                   Photo reference: {originalStyleSelection.filename}
@@ -672,9 +646,7 @@ export default function App() {
                 <p>
                   Photo reference: {originalStyleSelection.filename}
                 </p>
-                <p>
-                  The barber will confirm the price for this style.
-                </p>
+
                 <button
                   type="button"
                   className="gallery-view-button"
@@ -719,17 +691,11 @@ export default function App() {
               >
                 {haircuts.map((cut) => (
                   <option key={cut.name} value={cut.name}>
-                    {cut.name} — GH₵{cut.price}
+                    {cut.name}
                   </option>
                 ))}
               </select>
             </label>
-
-            {!originalStyleSelection && (
-              <div className="chosen-price">
-                Estimated price: <strong>GH₵{selectedCut.price}</strong>
-              </div>
-            )}
 
             <div className="form-row">
               <label>
