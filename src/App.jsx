@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
 import BusinessExtras from './BusinessExtras';
-
-// Use each renamed image filename as its gallery title.
 import originalHaircutFiles from './haircuts-manifest.json';
 
 const originalHaircuts = originalHaircutFiles.map((filename, index) => {
@@ -64,22 +62,10 @@ const haircuts = [
     description: 'A textured natural cut with a tidy finish.',
   },
   {
-    name: 'Short Buzz Cut',
-    category: 'Classic Cuts',
-    image: photo('newimage3.jpeg'),
-    description: 'A simple, low-maintenance short cut.',
-  },
-  {
     name: 'Classic Executive Cut',
     category: 'Classic Cuts',
     image: photo('newimage4%20%282%29.jpeg'),
     description: 'A polished everyday gentleman’s cut.',
-  },
-  {
-    name: 'Burst Fade / Mohawk',
-    category: 'Trendy Cuts',
-    image: photo('newimage2.jpeg'),
-    description: 'A bold textured style.',
   },
   {
     name: 'Braids & Beard Style',
@@ -92,12 +78,6 @@ const haircuts = [
     category: 'Beard & Grooming',
     image: photo('newimage5.jpeg'),
     description: 'A full haircut and beard refresh.',
-  },
-  {
-    name: 'Beard Trim & Line-up',
-    category: 'Beard & Grooming',
-    image: photo('crossroad1.jpeg'),
-    description: 'Detailed beard shaping and sharp edges.',
   },
   {
     name: 'Classic Buzz Cut & Beard',
@@ -355,9 +335,7 @@ export default function App() {
           `Photo reference: ${originalStyleSelection.filename}`,
           `Other selected service: ${form.service}`,
         ]
-      : [
-          `Preferred haircut: ${form.service}`,
-        ];
+      : [`Preferred haircut: ${form.service}`];
 
     const message = [
       'Hello DARLING DE BARBER!',
@@ -561,12 +539,6 @@ export default function App() {
                     src={cut.image}
                     alt={`${cut.name} haircut reference`}
                     loading="lazy"
-                    onError={(event) => {
-                      if (!event.currentTarget.dataset.fallback) {
-                        event.currentTarget.dataset.fallback = 'true';
-                        event.currentTarget.src = photo('newimage3.jpeg');
-                      }
-                    }}
                   />
                   <span className="haircut-category">{cut.category}</span>
                 </div>
