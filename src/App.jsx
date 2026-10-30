@@ -228,24 +228,37 @@ export default function App() {
     });
   }
 
-  function submitBooking(event) {
-    event.preventDefault();
+function submitBooking(event) {
+  event.preventDefault();
 
-    const message = [
-      'Hello DARLING DE BARBER! I would like to book an appointment.',
-      '',
-      `Name: ${booking.name}`,
-      `Phone: ${booking.phone}`,
-      `Service: ${booking.service}`,
-      `Preferred date: ${booking.date}`,
-      `Preferred time: ${booking.time}`,
-      `Additional details: ${booking.notes || 'None'}`,
-      '',
-      'Please confirm whether this appointment time is available.',
-    ].join('\n');
+  const selectedStyle = haircuts.find(
+    (cut) => cut.name === booking.service
+  );
 
-    window.open(makeWhatsAppLink(message), '_blank', 'noopener,noreferrer');
-  }
+  const imageUrl = selectedStyle
+    ? `${window.location.origin}${selectedStyle.image}`
+    : '';
+
+  const message = [
+    'Hello DARLING DE BARBER! I would like to book an appointment.',
+    '',
+    `Name: ${booking.name}`,
+    `Phone: ${booking.phone}`,
+    `Preferred style: ${booking.service}`,
+    `Style image: ${imageUrl || 'Please discuss with me'}`,
+    `Preferred date: ${booking.date}`,
+    `Preferred time: ${booking.time}`,
+    `Additional details: ${booking.notes || 'None'}`,
+    '',
+    'Please confirm whether this appointment time is available.',
+  ].join('\n');
+
+  window.open(
+    makeWhatsAppLink(message),
+    '_blank',
+    'noopener,noreferrer'
+  );
+}
 
   const today = new Date();
   const localToday = [
@@ -451,6 +464,33 @@ export default function App() {
           </div>
 
           <form className="booking-form" onSubmit={submitBooking}>
+          
+{booking.service && (
+  <div className="selected-style-preview">
+    {(() => {
+      const selectedStyle = haircuts.find(
+        (cut) => cut.name === booking.service
+      );
+
+      return selectedStyle ? (
+        <>
+          <img
+            src={selectedStyle.image}
+            alt={selectedStyle.name}
+          />
+          <div>
+            <p>Your selected style</p>
+            <h3>{selectedStyle.name}</h3>
+            <p>{selectedStyle.description}</p>
+          </div>
+        </>
+      ) : (
+        <p>Style consultation selected</p>
+      );
+    })()}
+  </div>
+)}
+
             <div className="form-heading">
               <h3>Appointment Details</h3>
               <p>Complete the fields below to get started.</p>
