@@ -134,12 +134,12 @@ const categories = [
 ];
 
 const openingHours = [
-  { day: 'Monday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Tuesday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Wednesday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Thursday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Friday', hours: '8:00 AM – 8:00 PM' },
-  { day: 'Saturday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Monday', hours: '8:00 AM – 10:00 PM' },
+  { day: 'Tuesday', hours: '8:00 AM – 10:00 PM' },
+  { day: 'Wednesday', hours: '8:00 AM – 10:00 PM' },
+  { day: 'Thursday', hours: '8:00 AM – 10:00 PM' },
+  { day: 'Friday', hours: '8:00 AM – 10:00 PM' },
+  { day: 'Saturday', hours: '8:00 AM – 10:00 PM' },
   { day: 'Sunday', hours: 'Please contact us' },
 ];
 
