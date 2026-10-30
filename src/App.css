@@ -141,27 +141,55 @@ img {
   color: #111;
 }
 
+
+
+/* DARLING DE BARBER - CLIENT HERO IMAGE */
+
 .hero {
   position: relative;
   min-height: 760px;
   padding: 90px 8%;
   display: flex;
   align-items: center;
-  background: #17130e
-    url("https://crossroadclippers.com/assets/images/crossroad1.jpeg")
-    center 40% / cover no-repeat;
+
+  background-color: #17130e;
+  background-image: url('/haircuts/darlingboy.jpeg');
+  background-position: center 35%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+
+/* Dark overlay to keep text readable */
 
 .hero-shade {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     90deg,
-    rgba(5, 5, 5, 0.88) 0%,
-    rgba(5, 5, 5, 0.60) 40%,
-    rgba(5, 5, 5, 0.12) 100%
+    rgba(5, 5, 5, 0.90) 0%,
+    rgba(5, 5, 5, 0.65) 40%,
+    rgba(5, 5, 5, 0.15) 100%
   );
 }
+
+/* Mobile hero image adjustment */
+
+@media (max-width: 768px) {
+  .hero {
+    min-height: 680px;
+    padding: 100px 6% 70px;
+    background-position: 60% center;
+  }
+
+  .hero-shade {
+    background: linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.88),
+      rgba(5, 5, 5, 0.45)
+    );
+  }
+}
+
 
 .hero-content {
   position: relative;
