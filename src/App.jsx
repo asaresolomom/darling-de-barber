@@ -10,76 +10,77 @@ const haircuts = [
   {
     name: 'Low Fade',
     category: 'Fades',
-    image: '/haircuts/newimage3.jpeg',
+    image: '/haircuts/Low fade with sculpted Beard.jpeg',
     description: 'A clean low fade with a sharp, professional finish.',
   },
   {
     name: 'Mid Fade & Beard',
     category: 'Fades',
-    image: '/haircuts/newimage4.jpeg',
+    image: '/haircuts/Classic low fade with full beard.jpeg',
     description: 'A balanced fade paired with a neatly defined beard.',
   },
   {
     name: 'High Skin Fade',
     category: 'Fades',
-    image: '/haircuts/crossroad1.jpeg',
+    image: '/haircuts/Low skin fade with crisp shape-up.jpeg',
     description: 'A bold skin fade with a crisp outline.',
   },
   {
     name: 'Taper Fade',
     category: 'Fades',
-    image: '/haircuts/crossroad2.jpeg',
+    image: '/haircuts/Low Taper.jpeg',
     description: 'A neat taper around the temples and neckline.',
   },
   {
     name: 'Afro Shape-up',
     category: 'Afro & Natural',
-    image: '/haircuts/newimage2.jpeg',
+    image: '/haircuts/low textured Afro with Rounded edge.jpeg',
     description: 'Natural texture shaped with a clean hairline.',
   },
   {
     name: 'Natural Textured Cut',
     category: 'Afro & Natural',
-    image: '/haircuts/newimage1.jpeg',
+    image: '/haircuts/Textured curls with low taper fade.jpeg',
     description: 'A textured natural cut with a tidy finish.',
   },
   {
     name: 'Short Buzz Cut',
     category: 'Classic Cuts',
-    image: '/haircuts/newimage5.jpeg',
+    image: '/haircuts/Blonde dyed buzz cut.jpeg',
     description: 'A simple, low-maintenance haircut with a clean finish.',
   },
   {
     name: 'Classic Executive Cut',
     category: 'Classic Cuts',
-    image: '/haircuts/newimage4%20%282%29.jpeg',
+    image: '/haircuts/Classic low fade with full beard.jpeg',
     description: 'A polished everyday cut for the modern gentleman.',
   },
   {
     name: 'Burst Fade / Mohawk',
     category: 'Trendy Cuts',
-    image: '/haircuts/newimage.jpeg',
+    image: '/haircuts/Freeform loc Mohawk with Fade.jpeg',
     description: 'A stylish, bold cut with a modern shape.',
   },
   {
     name: 'Braids & Beard Style',
     category: 'Locs & Braids',
-    image: '/haircuts/ob.jpeg',
+    image: '/haircuts/Neat cornrow braids with taper fade.jpeg',
     description: 'A distinctive style finished with careful grooming.',
   },
   {
     name: 'Haircut & Beard',
     category: 'Beard & Grooming',
-    image: '/haircuts/bv.jpeg',
+    image: '/haircuts/Low fade with sculpted Beard.jpeg',
     description: 'A complete haircut and beard refresh.',
   },
   {
     name: 'Beard Trim & Line-up',
     category: 'Beard & Grooming',
-    image: '/haircuts/ty.jpeg',
+    image: '/haircuts/Low skin fade with crisp shape-up.jpeg',
     description: 'Detailed beard shaping with clean, sharp edges.',
   },
 ];
+
 
 const categories = [
   'All Styles',
@@ -303,7 +304,7 @@ export default function App() {
           <div className="hero-image-wrap">
             <img
               className="hero-image"
-              src="/haircuts/darlingboy"
+              src="/haircuts/darlingboy.jpeg"
               alt="DARLING DE BARBER grooming and haircut showcase"
               fetchPriority="high"
             />
@@ -313,7 +314,7 @@ export default function App() {
         <section className="about-section section-padding" id="about">
           <div className="about-image-wrap">
             <img
-              src="/haircuts/crossroad2.jpeg"
+              src="/haircuts/Dread Locs with mid fade.jpeg"
               alt="Barbering style inspiration"
               loading="lazy"
             />

@@ -1589,3 +1589,772 @@ h2 em {
 }
 
 
+
+/* ==========================================
+   DARLING DE BARBER
+   Styling compatibility for the updated App.jsx
+   Keep your original CSS above this section.
+========================================== */
+
+.barber-site {
+  --barber-bg: #0b0b0b;
+  --barber-surface: #151515;
+  --barber-text: #f7f4ed;
+  --barber-muted: #b8b4aa;
+  --barber-gold: #d4af37;
+  --barber-border: rgba(212, 175, 55, 0.3);
+
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--barber-bg);
+  color: var(--barber-text);
+  font-family: inherit;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.barber-site.theme-light {
+  --barber-bg: #f7f4ed;
+  --barber-surface: #ffffff;
+  --barber-text: #171717;
+  --barber-muted: #65615a;
+  --barber-gold: #a67c16;
+  --barber-border: rgba(166, 124, 22, 0.3);
+}
+
+.barber-site *,
+.barber-site *::before,
+.barber-site *::after {
+  box-sizing: border-box;
+}
+
+.barber-site img {
+  display: block;
+  max-width: 100%;
+}
+
+.barber-site a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.barber-site button,
+.barber-site input,
+.barber-site select,
+.barber-site textarea {
+  font: inherit;
+}
+
+.barber-site button {
+  cursor: pointer;
+}
+
+.barber-site .topbar {
+  padding: 10px 16px;
+  background: var(--barber-gold);
+  color: #111;
+  text-align: center;
+  letter-spacing: 2px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.barber-site .topbar p {
+  margin: 0;
+}
+
+.barber-site .site-header {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 22px 6%;
+  background: var(--barber-bg);
+  border-bottom: 1px solid var(--barber-border);
+}
+
+.barber-site .brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barber-site .brand-name {
+  color: var(--barber-gold);
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.barber-site .brand-subtitle {
+  color: var(--barber-muted);
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.barber-site .main-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.barber-site .main-nav > a {
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.barber-site .main-nav > a:hover {
+  color: var(--barber-gold);
+}
+
+.barber-site .main-nav .nav-book-button {
+  padding: 12px 18px;
+  background: var(--barber-gold);
+  color: #111;
+  font-weight: 800;
+}
+
+.barber-site .theme-toggle,
+.barber-site .mobile-menu-toggle {
+  padding: 10px 12px;
+  border: 1px solid var(--barber-border);
+  background: transparent;
+  color: var(--barber-text);
+}
+
+.barber-site .mobile-menu-toggle {
+  display: none;
+  font-size: 22px;
+}
+
+.barber-site .hero-section {
+  display: grid;
+  grid-template-columns: 1fr 0.85fr;
+  align-items: center;
+  gap: 48px;
+  min-height: 600px;
+  padding: 70px 7%;
+  background:
+    radial-gradient(ellipse at 80% 50%, rgba(212, 175, 55, 0.1), transparent 55%),
+    var(--barber-bg);
+}
+
+.barber-site .hero-content {
+  max-width: 660px;
+}
+
+.barber-site .section-eyebrow {
+  margin: 0 0 18px;
+  color: var(--barber-gold);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.barber-site .hero-section h1 {
+  margin: 0;
+  font-size: clamp(42px, 6vw, 78px);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -2px;
+}
+
+.barber-site .hero-section h1 span {
+  color: var(--barber-gold);
+}
+
+.barber-site .hero-description {
+  max-width: 520px;
+  margin: 24px 0;
+  color: var(--barber-muted);
+  font-size: 16px;
+  line-height: 1.9;
+}
+
+.barber-site .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.barber-site .primary-button,
+.barber-site .secondary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 14px 23px;
+  border: 1px solid var(--barber-gold);
+  font-size: 13px;
+  font-weight: 800;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.barber-site .primary-button {
+  background: var(--barber-gold);
+  color: #111;
+}
+
+.barber-site .secondary-button {
+  background: transparent;
+  color: var(--barber-text);
+}
+
+.barber-site .primary-button:hover,
+.barber-site .secondary-button:hover {
+  transform: translateY(-2px);
+}
+
+.barber-site .secondary-button:hover {
+  background: var(--barber-gold);
+  color: #111;
+}
+
+.barber-site .hero-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 32px;
+  color: var(--barber-muted);
+  font-size: 12px;
+}
+
+.barber-site .hero-highlights span::first-letter {
+  color: var(--barber-gold);
+}
+
+.barber-site .hero-image-wrap {
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--barber-border);
+  background: var(--barber-surface);
+}
+
+.barber-site .hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.barber-site .section-padding {
+  padding: 90px 7%;
+}
+
+.barber-site .about-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1fr;
+  align-items: center;
+  gap: 60px;
+  background: var(--barber-surface);
+}
+
+.barber-site .about-image-wrap {
+  height: 390px;
+  overflow: hidden;
+  background: var(--barber-bg);
+}
+
+.barber-site .about-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.barber-site .about-content h2,
+.barber-site .booking-intro h2,
+.barber-site .final-cta h2 {
+  margin: 0 0 22px;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.15;
+}
+
+.barber-site .about-content > p:not(.section-eyebrow),
+.barber-site .booking-intro > p:not(.section-eyebrow),
+.barber-site .final-cta > p:not(.section-eyebrow) {
+  color: var(--barber-muted);
+  line-height: 1.9;
+}
+
+.barber-site .text-link {
+  display: inline-block;
+  margin-top: 15px;
+  color: var(--barber-gold);
+  font-weight: 800;
+}
+
+.barber-site .haircuts-section {
+  background: var(--barber-bg);
+}
+
+.barber-site .section-heading {
+  max-width: 720px;
+  margin: 0 auto 38px;
+  text-align: center;
+}
+
+.barber-site .section-heading h2 {
+  margin: 0 0 14px;
+  font-size: clamp(30px, 4vw, 46px);
+}
+
+.barber-site .section-heading > p:last-child {
+  color: var(--barber-muted);
+  line-height: 1.8;
+}
+
+.barber-site .category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0 0 36px;
+}
+
+.barber-site .category-filters button {
+  padding: 10px 16px;
+  border: 1px solid var(--barber-border);
+  background: transparent;
+  color: var(--barber-text);
+  font-size: 12px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.barber-site .category-filters button.active,
+.barber-site .category-filters button:hover {
+  background: var(--barber-gold);
+  color: #111;
+  border-color: var(--barber-gold);
+}
+
+.barber-site .haircuts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.barber-site .haircut-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--barber-border);
+  background: var(--barber-surface);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.barber-site .haircut-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--barber-gold);
+}
+
+.barber-site .haircut-image-wrap {
+  height: 290px;
+  overflow: hidden;
+  background: #222;
+}
+
+.barber-site .haircut-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.barber-site .haircut-card:hover .haircut-image-wrap img {
+  transform: scale(1.04);
+}
+
+.barber-site .haircut-card-content {
+  padding: 22px;
+}
+
+.barber-site .haircut-category {
+  margin: 0 0 10px;
+  color: var(--barber-gold);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.barber-site .haircut-card-content h3 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.barber-site .haircut-card-content > p:not(.haircut-category) {
+  min-height: 48px;
+  color: var(--barber-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.barber-site .haircut-book-button {
+  margin-top: 12px;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  color: var(--barber-gold);
+  font-weight: 800;
+  text-align: left;
+}
+
+.barber-site .booking-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1fr;
+  align-items: start;
+  gap: 60px;
+  background: var(--barber-surface);
+}
+
+.barber-site .booking-note {
+  display: flex;
+  gap: 16px;
+  margin-top: 35px;
+  padding: 22px;
+  border: 1px solid var(--barber-border);
+}
+
+.barber-site .booking-note-icon {
+  color: var(--barber-gold);
+  font-size: 25px;
+}
+
+.barber-site .booking-note h3 {
+  margin: 0 0 8px;
+}
+
+.barber-site .booking-note p {
+  margin: 0;
+  color: var(--barber-muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.barber-site .booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 19px;
+  padding: 32px;
+  border: 1px solid var(--barber-border);
+  background: var(--barber-bg);
+}
+
+.barber-site .form-heading h3 {
+  margin: 0 0 8px;
+  font-size: 24px;
+}
+
+.barber-site .form-heading p {
+  margin: 0;
+  color: var(--barber-muted);
+  font-size: 13px;
+}
+
+.barber-site .form-field {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+}
+
+.barber-site .form-field label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.barber-site .form-field input,
+.barber-site .form-field select,
+.barber-site .form-field textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 12px 13px;
+  border: 1px solid var(--barber-border);
+  border-radius: 0;
+  outline: none;
+  background: var(--barber-surface);
+  color: var(--barber-text);
+}
+
+.barber-site .form-field textarea {
+  resize: vertical;
+}
+
+.barber-site .form-field input:focus,
+.barber-site .form-field select:focus,
+.barber-site .form-field textarea:focus {
+  border-color: var(--barber-gold);
+}
+
+.barber-site .form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.barber-site .booking-submit {
+  width: 100%;
+  border: 0;
+}
+
+.barber-site .form-disclaimer {
+  margin: 0;
+  color: var(--barber-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.barber-site .hours-section {
+  background: var(--barber-bg);
+}
+
+.barber-site .hours-list {
+  max-width: 650px;
+  margin: 0 auto;
+  border-top: 1px solid var(--barber-border);
+}
+
+.barber-site .hours-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 5px;
+  border-bottom: 1px solid var(--barber-border);
+  font-size: 14px;
+}
+
+.barber-site .hours-row span:last-child {
+  color: var(--barber-muted);
+  text-align: right;
+}
+
+.barber-site #location {
+  scroll-margin-top: 30px;
+}
+
+.barber-site .final-cta {
+  text-align: center;
+  background:
+    radial-gradient(ellipse at center, rgba(212, 175, 55, 0.12), transparent 65%),
+    var(--barber-surface);
+}
+
+.barber-site .final-cta .primary-button {
+  margin-top: 20px;
+}
+
+.barber-site .site-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 45px 20px;
+  border-top: 1px solid var(--barber-border);
+  background: var(--barber-bg);
+  text-align: center;
+}
+
+.barber-site .footer-brand {
+  color: var(--barber-gold);
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.barber-site .site-footer p {
+  margin: 0;
+  color: var(--barber-muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.barber-site .footer-whatsapp {
+  margin-top: 8px;
+  color: var(--barber-gold);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* Tablet layout */
+@media (max-width: 1000px) {
+  .barber-site .site-header {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+
+  .barber-site .main-nav {
+    gap: 14px;
+  }
+
+  .barber-site .hero-section {
+    gap: 28px;
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+
+  .barber-site .hero-image-wrap {
+    height: 400px;
+  }
+
+  .barber-site .haircuts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .barber-site .section-padding {
+    padding: 70px 5%;
+  }
+
+  .barber-site .about-section,
+  .barber-site .booking-section {
+    gap: 35px;
+  }
+}
+
+/* Mobile layout */
+@media (max-width: 720px) {
+  .barber-site .topbar {
+    padding: 9px 10px;
+    font-size: 8px;
+    letter-spacing: 1.3px;
+  }
+
+  .barber-site .site-header {
+    padding: 16px 5%;
+  }
+
+  .barber-site .brand-name {
+    font-size: 17px;
+  }
+
+  .barber-site .brand-subtitle {
+    font-size: 8px;
+    letter-spacing: 1.2px;
+  }
+
+  .barber-site .mobile-menu-toggle {
+    display: block;
+  }
+
+  .barber-site .main-nav {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    display: none;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    padding: 12px 5% 22px;
+    border-bottom: 1px solid var(--barber-border);
+    background: var(--barber-bg);
+  }
+
+  .barber-site .main-nav.nav-open {
+    display: flex;
+  }
+
+  .barber-site .main-nav > a {
+    padding: 14px 4px;
+    border-bottom: 1px solid var(--barber-border);
+  }
+
+  .barber-site .main-nav .nav-book-button {
+    margin-top: 12px;
+    padding: 13px;
+    text-align: center;
+  }
+
+  .barber-site .theme-toggle {
+    margin-top: 12px;
+    text-align: left;
+  }
+
+  .barber-site .hero-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    min-height: auto;
+    padding: 55px 6%;
+  }
+
+  .barber-site .hero-section h1 {
+    font-size: clamp(39px, 11vw, 60px);
+    letter-spacing: -1.5px;
+  }
+
+  .barber-site .hero-description {
+    font-size: 14px;
+  }
+
+  .barber-site .hero-image-wrap {
+    height: 340px;
+  }
+
+  .barber-site .hero-highlights {
+    gap: 12px;
+    font-size: 11px;
+  }
+
+  .barber-site .section-padding {
+    padding: 58px 6%;
+  }
+
+  .barber-site .about-section,
+  .barber-site .booking-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .barber-site .about-image-wrap {
+    height: 300px;
+  }
+
+  .barber-site .haircuts-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .barber-site .haircut-image-wrap {
+    height: 320px;
+  }
+
+  .barber-site .booking-form {
+    padding: 22px 17px;
+  }
+
+  .barber-site .form-row {
+    flex-direction: column;
+  }
+
+  .barber-site .hours-row {
+    font-size: 12px;
+  }
+
+  .barber-site .section-heading h2,
+  .barber-site .about-content h2,
+  .barber-site .booking-intro h2,
+  .barber-site .final-cta h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 380px) {
+  .barber-site .hero-actions {
+    flex-direction: column;
+  }
+
+  .barber-site .hero-actions a {
+    width: 100%;
+  }
+
+  .barber-site .hero-image-wrap {
+    height: 270px;
+  }
+
+  .barber-site .haircut-image-wrap {
+    height: 260px;
+  }
+}
