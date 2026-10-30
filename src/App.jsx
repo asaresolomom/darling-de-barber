@@ -5,12 +5,22 @@ import LocationSection from './LocationSection';
 import BusinessExtras from './BusinessExtras';
 import originalHaircutFiles from './haircuts-manifest.json';
 
-const originalHaircuts = originalHaircutFiles.map((filename, index) => ({
-  id: index + 1,
-  name: `Style ${String(index + 1).padStart(3, '0')}`,
-  image: `/haircuts/${encodeURIComponent(filename)}`,
-  filename,
-}));
+// Use each renamed image filename as its gallery title.
+const originalHaircuts = originalHaircutFiles.map((filename, index) => {
+  const name = filename
+    .replace(/\.[^/.]+$/, '')
+    .replace(/[-_]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
+
+  return {
+    id: index + 1,
+    name,
+    image: `/haircuts/${encodeURIComponent(filename)}`,
+    filename,
+  };
+});
 
 const photo = (file) =>
   `https://crossroadclippers.com/assets/images/${file}`;
@@ -178,7 +188,7 @@ function OriginalHaircutGallery({ onRequestStyle }) {
               <div className="original-gallery-image">
                 <img
                   src={style.image}
-                  alt={`${style.name} haircut by Darling De Barber`}
+                  alt={style.name}
                   loading="lazy"
                 />
                 <span className="original-gallery-number">
@@ -188,7 +198,6 @@ function OriginalHaircutGallery({ onRequestStyle }) {
 
               <div className="original-gallery-info">
                 <h3>{style.name}</h3>
-                <p>Original Darling De Barber hairstyle</p>
 
                 <div className="original-gallery-actions">
                   <button
@@ -261,8 +270,6 @@ export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [category, setCategory] = useState('All Styles');
   const [selectedStyle, setSelectedStyle] = useState('Low Fade');
-
-  // Holds a selected photo from the original gallery.
   const [originalStyleSelection, setOriginalStyleSelection] = useState(null);
 
   const [theme, setTheme] = useState(() => {
@@ -320,7 +327,6 @@ export default function App() {
       [name]: value,
     }));
 
-    // If the customer chooses a regular haircut, clear any gallery selection.
     if (name === 'service') {
       setOriginalStyleSelection(null);
       setSelectedStyle(value);
@@ -390,7 +396,6 @@ export default function App() {
     const url =
       `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    // WhatsApp opens only after the customer submits the form.
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
