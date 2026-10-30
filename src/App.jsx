@@ -3,105 +3,86 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import LocationSection from './LocationSection';
 import BusinessExtras from './BusinessExtras';
-import originalHaircutFiles from './haircuts-manifest.json';
 
-const originalHaircuts = originalHaircutFiles.map((filename, index) => {
-  const name = filename
-    .replace(/\.[^/.]+$/, '')
-    .replace(/[-_]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .replace(/\b\w/g, (letter) => letter.toUpperCase());
-
-  return {
-    id: index + 1,
-    name,
-    image: `/haircuts/${encodeURIComponent(filename)}`,
-    filename,
-  };
-});
-
-const photo = (file) =>
-  `https://crossroadclippers.com/assets/images/${file}`;
+const WHATSAPP_NUMBER = '233532107834';
 
 const haircuts = [
   {
     name: 'Low Fade',
     category: 'Fades',
-    image: photo('newimage3.jpeg'),
-    description: 'A clean low fade with a sharp finish.',
+    image: '/haircuts/newimage3.jpeg',
+    description: 'A clean low fade with a sharp, professional finish.',
   },
   {
     name: 'Mid Fade & Beard',
     category: 'Fades',
-    image: photo('newimage4.jpeg'),
-    description: 'A balanced fade with a defined beard.',
+    image: '/haircuts/newimage4.jpeg',
+    description: 'A balanced fade paired with a neatly defined beard.',
   },
   {
     name: 'High Skin Fade',
     category: 'Fades',
-    image: photo('crossroad1.jpeg'),
+    image: '/haircuts/crossroad1.jpeg',
     description: 'A bold skin fade with a crisp outline.',
   },
   {
     name: 'Taper Fade',
     category: 'Fades',
-    image: photo('crossroad2.jpeg'),
+    image: '/haircuts/crossroad2.jpeg',
     description: 'A neat taper around the temples and neckline.',
   },
   {
     name: 'Afro Shape-up',
     category: 'Afro & Natural',
-    image: photo('newimage2.jpeg'),
-    description: 'Natural texture shaped with a clean outline.',
+    image: '/haircuts/newimage2.jpeg',
+    description: 'Natural texture shaped with a clean hairline.',
   },
   {
     name: 'Natural Textured Cut',
     category: 'Afro & Natural',
-    image: photo('newimage1.jpeg'),
+    image: '/haircuts/newimage1.jpeg',
     description: 'A textured natural cut with a tidy finish.',
+  },
+  {
+    name: 'Short Buzz Cut',
+    category: 'Classic Cuts',
+    image: '/haircuts/newimage5.jpeg',
+    description: 'A simple, low-maintenance haircut with a clean finish.',
   },
   {
     name: 'Classic Executive Cut',
     category: 'Classic Cuts',
-    image: photo('newimage4%20%282%29.jpeg'),
-    description: 'A polished everyday gentleman’s cut.',
+    image: '/haircuts/newimage4%20%282%29.jpeg',
+    description: 'A polished everyday cut for the modern gentleman.',
+  },
+  {
+    name: 'Burst Fade / Mohawk',
+    category: 'Trendy Cuts',
+    image: '/haircuts/newimage.jpeg',
+    description: 'A stylish, bold cut with a modern shape.',
   },
   {
     name: 'Braids & Beard Style',
     category: 'Locs & Braids',
-    image: photo('newimage.jpeg'),
-    description: 'Braided styling with a groomed beard.',
+    image: '/haircuts/ob.jpeg',
+    description: 'A distinctive style finished with careful grooming.',
   },
   {
     name: 'Haircut & Beard',
     category: 'Beard & Grooming',
-    image: photo('newimage5.jpeg'),
-    description: 'A full haircut and beard refresh.',
-  },
-  {
-    name: 'Classic Buzz Cut & Beard',
-    category: 'Our Real Work',
-    image: '/haircuts/ob.jpeg',
-    description: 'A clean short haircut with a shaped full beard.',
-  },
-  {
-    name: 'Ladies Natural Taper Cut',
-    category: 'Our Real Work',
-    image: '/haircuts/ty.jpeg',
-    description: 'A beautiful natural short haircut with a clean hairline.',
-  },
-  {
-    name: 'Burgundy Textured Cut & Design',
-    category: 'Our Real Work',
     image: '/haircuts/bv.jpeg',
-    description: 'A burgundy textured haircut with a stylish side design.',
+    description: 'A complete haircut and beard refresh.',
+  },
+  {
+    name: 'Beard Trim & Line-up',
+    category: 'Beard & Grooming',
+    image: '/haircuts/ty.jpeg',
+    description: 'Detailed beard shaping with clean, sharp edges.',
   },
 ];
 
 const categories = [
   'All Styles',
-  'Our Real Work',
   'Fades',
   'Afro & Natural',
   'Classic Cuts',
@@ -110,642 +91,494 @@ const categories = [
   'Beard & Grooming',
 ];
 
-const WHATSAPP_NUMBER = '233532107834';
+const openingHours = [
+  { day: 'Monday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Tuesday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Wednesday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Thursday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Friday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Saturday', hours: '8:00 AM – 8:00 PM' },
+  { day: 'Sunday', hours: 'Please contact us' },
+];
 
-function OriginalHaircutGallery({ onRequestStyle }) {
-  const [activePhoto, setActivePhoto] = useState(null);
+function readSavedTheme() {
+  try {
+    return localStorage.getItem('darling-barber-theme') || 'dark';
+  } catch {
+    return 'dark';
+  }
+}
 
-  useEffect(() => {
-    if (!activePhoto) return undefined;
+function makeWhatsAppLink(message) {
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+}
 
-    function closeOnEscape(event) {
-      if (event.key === 'Escape') setActivePhoto(null);
-    }
-
-    window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
-  }, [activePhoto]);
-
+function SectionHeading({ eyebrow, title, description }) {
   return (
-    <section className="original-gallery section" id="original-work">
-      <div className="section-heading">
-        <p className="eyebrow">✦ AUTHENTIC DARLING DE BARBER HAIRSTYLES</p>
-        <h2>
-          OUR <em>REAL WORK.</em>
-        </h2>
-        <p>
-          Explore our original haircut collection. Choose your favourite
-          style, complete the booking form, and send your request to our barber.
-        </p>
-      </div>
-
-      <div className="gallery-count">
-        {originalHaircuts.length} ORIGINAL STYLES
-      </div>
-
-      {originalHaircuts.length === 0 ? (
-        <p className="gallery-empty">
-          No photos found. Add your images to public/haircuts.
-        </p>
-      ) : (
-        <div className="original-gallery-grid">
-          {originalHaircuts.map((style) => (
-            <article className="original-gallery-card" key={style.filename}>
-              <div className="original-gallery-image">
-                <img
-                  src={style.image}
-                  alt={style.name}
-                  loading="lazy"
-                />
-                <span className="original-gallery-number">
-                  {style.name}
-                </span>
-              </div>
-
-              <div className="original-gallery-info">
-                <h3>{style.name}</h3>
-
-                <div className="original-gallery-actions">
-                  <button
-                    type="button"
-                    className="gallery-view-button"
-                    onClick={() => setActivePhoto(style)}
-                  >
-                    VIEW PHOTO
-                  </button>
-
-                  <button
-                    type="button"
-                    className="gallery-book-button"
-                    onClick={() => onRequestStyle(style)}
-                  >
-                    REQUEST STYLE ↗
-                  </button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
-
-      {activePhoto && (
-        <div
-          className="gallery-modal"
-          role="presentation"
-          onClick={() => setActivePhoto(null)}
-        >
-          <div
-            className="gallery-modal-content"
-            role="dialog"
-            aria-modal="true"
-            aria-label={activePhoto.name}
-            onClick={(event) => event.stopPropagation()}
-          >
-            <button
-              type="button"
-              className="gallery-modal-close"
-              onClick={() => setActivePhoto(null)}
-              aria-label="Close photo"
-            >
-              ✕
-            </button>
-
-            <img src={activePhoto.image} alt={activePhoto.name} />
-
-            <div className="gallery-modal-bottom">
-              <h3>{activePhoto.name}</h3>
-              <button
-                type="button"
-                className="gallery-book-button"
-                onClick={() => {
-                  setActivePhoto(null);
-                  onRequestStyle(activePhoto);
-                }}
-              >
-                REQUEST THIS STYLE ↗
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
+    <div className="section-heading">
+      {eyebrow && <p className="section-eyebrow">{eyebrow}</p>}
+      <h2>{title}</h2>
+      {description && <p>{description}</p>}
+    </div>
   );
 }
 
 export default function App() {
+  const [theme, setTheme] = useState(readSavedTheme);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [category, setCategory] = useState('All Styles');
-  const [selectedStyle, setSelectedStyle] = useState('Low Fade');
-  const [originalStyleSelection, setOriginalStyleSelection] = useState(null);
-
-  const [theme, setTheme] = useState(() => {
-    try {
-      return localStorage.getItem('darling-barber-theme') === 'light'
-        ? 'light'
-        : 'dark';
-    } catch {
-      return 'dark';
-    }
-  });
-
-  const [customerLocation, setCustomerLocation] = useState({
-    location: '',
-    mapsLink: '',
-  });
-
-  const [form, setForm] = useState({
+  const [activeCategory, setActiveCategory] = useState('All Styles');
+  const [selectedCut, setSelectedCut] = useState('');
+  const [booking, setBooking] = useState({
     name: '',
     phone: '',
-    service: 'Low Fade',
+    service: '',
     date: '',
     time: '',
+    notes: '',
   });
 
   useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+
     try {
       localStorage.setItem('darling-barber-theme', theme);
     } catch {
-      // The website still works if local storage is unavailable.
+      // The website still works if browser storage is unavailable.
     }
   }, [theme]);
 
-  const selectedCut =
-    haircuts.find((cut) => cut.name === form.service) || haircuts[0];
+  useEffect(() => {
+    if (!menuOpen) return undefined;
 
-  const visibleCuts =
-    category === 'All Styles'
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') setMenuOpen(false);
+    };
+
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
+  const visibleHaircuts =
+    activeCategory === 'All Styles'
       ? haircuts
-      : haircuts.filter((cut) => cut.category === category);
+      : haircuts.filter((cut) => cut.category === activeCategory);
 
-  const today = new Date();
-
-  const minDate = [
-    today.getFullYear(),
-    String(today.getMonth() + 1).padStart(2, '0'),
-    String(today.getDate()).padStart(2, '0'),
-  ].join('-');
-
-  function updateForm(event) {
+  function updateBooking(event) {
     const { name, value } = event.target;
 
-    setForm((previous) => ({
+    setBooking((previous) => ({
       ...previous,
       [name]: value,
     }));
-
-    if (name === 'service') {
-      setOriginalStyleSelection(null);
-      setSelectedStyle(value);
-    }
   }
 
-  function chooseCut(cut) {
-    setOriginalStyleSelection(null);
-    setSelectedStyle(cut.name);
-
-    setForm((previous) => ({
+  function chooseHaircut(cutName) {
+    setSelectedCut(cutName);
+    setBooking((previous) => ({
       ...previous,
-      service: cut.name,
+      service: cutName,
     }));
 
     document.getElementById('booking')?.scrollIntoView({
       behavior: 'smooth',
+      block: 'start',
     });
-  }
-
-  function requestOriginalStyle(style) {
-    setOriginalStyleSelection(style);
-
-    document.getElementById('booking')?.scrollIntoView({
-      behavior: 'smooth',
-    });
-  }
-
-  function toggleTheme() {
-    setTheme((current) => (current === 'dark' ? 'light' : 'dark'));
   }
 
   function submitBooking(event) {
     event.preventDefault();
 
-    const haircutDetails = originalStyleSelection
-      ? [
-          'Preferred haircut: Original work gallery style',
-          `Gallery style: ${originalStyleSelection.name}`,
-          `Photo reference: ${originalStyleSelection.filename}`,
-          `Other selected service: ${form.service}`,
-        ]
-      : [`Preferred haircut: ${form.service}`];
-
     const message = [
-      'Hello DARLING DE BARBER!',
+      'Hello DARLING DE BARBER! I would like to book an appointment.',
       '',
-      'I would like to request an appointment.',
+      `Name: ${booking.name}`,
+      `Phone: ${booking.phone}`,
+      `Service: ${booking.service}`,
+      `Preferred date: ${booking.date}`,
+      `Preferred time: ${booking.time}`,
+      `Additional details: ${booking.notes || 'None'}`,
       '',
-      `Name: ${form.name.trim()}`,
-      `Phone: ${form.phone.trim()}`,
-      ...haircutDetails,
-      `Preferred date: ${form.date}`,
-      `Preferred time: ${form.time.trim()}`,
-      '',
-      'CUSTOMER LOCATION',
-      `Area or address: ${customerLocation.location || 'Not provided'}`,
-      `Google Maps link: ${customerLocation.mapsLink || 'Not provided'}`,
-      '',
-      'Please confirm availability for my appointment.',
+      'Please confirm whether this appointment time is available.',
     ].join('\n');
 
-    const url =
-      `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-
-    window.open(url, '_blank', 'noopener,noreferrer');
+    window.open(makeWhatsAppLink(message), '_blank', 'noopener,noreferrer');
   }
 
+  const today = new Date();
+  const localToday = [
+    today.getFullYear(),
+    String(today.getMonth() + 1).padStart(2, '0'),
+    String(today.getDate()).padStart(2, '0'),
+  ].join('-');
+
   return (
-    <div className={`site theme-${theme}`}>
-      <div className="topbar animate-on-load">
-        PREMIUM GROOMING · CONFIDENCE IN EVERY CUT
+    <div className={`barber-site theme-${theme}`}>
+      <div className="topbar">
+        <p>PREMIUM GROOMING · CONFIDENCE IN EVERY CUT</p>
       </div>
 
-      <header className="header">
-        <a className="brand" href="#home">
-          <span className="brand-mark">D</span>
-          <span>
-            DARLING DE <b>BARBER</b>
-          </span>
+      <header className="site-header">
+        <a
+          href="#home"
+          className="brand"
+          aria-label="DARLING DE BARBER home"
+          onClick={() => setMenuOpen(false)}
+        >
+          <span className="brand-name">DARLING DE BARBER</span>
+          <span className="brand-subtitle">PRECISION · STYLE · CONFIDENCE</span>
         </a>
 
         <button
-          className="menu-toggle"
           type="button"
-          onClick={() => setMenuOpen((open) => !open)}
-          aria-label="Toggle navigation"
+          className="mobile-menu-toggle"
+          aria-label={menuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
         >
           {menuOpen ? '✕' : '☰'}
         </button>
 
-        <nav
-          className={menuOpen ? 'nav nav-open' : 'nav'}
-          onClick={() => setMenuOpen(false)}
-        >
-          <a href="#home">Home</a>
-          <a href="#about">About</a>
-          <a href="#haircuts">Haircut Styles</a>
-          <a href="#original-work">Our Real Work</a>
-          <a href="#location">Location</a>
-          <a href="#opening-hours">Opening Hours</a>
-          <a href="#booking">Booking</a>
-          <a className="nav-cta" href="#haircuts">
-            Choose Your Cut ↗
-          </a>
-        </nav>
+        <nav className={`main-nav ${menuOpen ? 'nav-open' : ''}`}>
+          {[
+            ['Home', '#home'],
+            ['About', '#about'],
+            ['Haircuts', '#haircuts'],
+            ['Book Now', '#booking'],
+            ['Location', '#location'],
+          ].map(([label, href]) => (
+            <a
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className={label === 'Book Now' ? 'nav-book-button' : ''}
+            >
+              {label}
+            </a>
+          ))}
 
-        <button
-          type="button"
-          className="theme-toggle"
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-        >
-          {theme === 'dark' ? '☀ Light Mode' : '☾ Dark Mode'}
-        </button>
+          <button
+            type="button"
+            className="theme-toggle"
+            onClick={() =>
+              setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
+            }
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? '☀ Light mode' : '☾ Dark mode'}
+          </button>
+        </nav>
       </header>
 
       <main>
-        <section className="hero" id="home">
-          <div className="hero-shade" />
-
+        <section className="hero-section" id="home">
           <div className="hero-content">
-            <p className="eyebrow animate-on-load delay-1">
-              ✦ THE ART OF LOOKING SHARP
-            </p>
-
-            <h1 className="animate-on-load delay-2">
+            <p className="section-eyebrow">WELCOME TO DARLING DE BARBER</p>
+            <h1>
               YOUR STYLE.
               <br />
-              <em>YOUR STATEMENT.</em>
+              <span>YOUR STATEMENT.</span>
             </h1>
-
-            <p className="hero-description animate-on-load delay-3">
-              Discover your next haircut. From clean fades and sharp
-              Ghanaian-style line-ups to classic cuts, find a look that
-              fits your confidence.
+            <p className="hero-description">
+              More than a haircut. Experience precision grooming, fresh fades,
+              clean lines and a style that represents you.
             </p>
 
-            <div className="hero-actions animate-on-load delay-4">
-              <a href="#haircuts" className="button button-gold">
-                FIND YOUR HAIRCUT ↗
+            <div className="hero-actions">
+              <a className="primary-button" href="#booking">
+                Book Your Cut
               </a>
-              <a href="#about" className="button button-outline">
-                ABOUT THE SHOP
+              <a className="secondary-button" href="#haircuts">
+                Explore Haircuts
               </a>
             </div>
 
-            <div className="hero-note animate-on-load delay-5">
-              ✦ PRECISION CUTS. PREMIUM SERVICE. YOUR BEST LOOK.
+            <div className="hero-highlights">
+              <span>✦ Precision Cuts</span>
+              <span>✦ Fresh Fades</span>
+              <span>✦ Personal Style</span>
             </div>
           </div>
 
-          <div className="hero-caption animate-on-load delay-5">
-            DARLING DE BARBER — YOUR STYLE, PERFECTED
+          <div className="hero-image-wrap">
+            <img
+              className="hero-image"
+              src="/haircuts/darlingboy"
+              alt="DARLING DE BARBER grooming and haircut showcase"
+              fetchPriority="high"
+            />
           </div>
         </section>
 
-        <div className="trust-strip">
-          <div>✦ PRECISION GROOMING</div>
-          <div>✦ PROFESSIONAL BARBERS</div>
-          <div>✦ FIND YOUR SIGNATURE STYLE</div>
-        </div>
-
-        <section className="about section" id="about">
-          <div className="about-image">
+        <section className="about-section section-padding" id="about">
+          <div className="about-image-wrap">
             <img
-              src={photo('crossroad2.jpeg')}
-              alt="Barbershop haircut reference"
+              src="/haircuts/crossroad2.jpeg"
+              alt="Barbering style inspiration"
               loading="lazy"
             />
-            <div className="image-label">
-              <span>THE</span>
-              <b>DETAIL</b>
-              <span>MAKES THE DIFFERENCE.</span>
-            </div>
           </div>
 
-          <div className="about-copy">
-            <p className="eyebrow">WELCOME TO DARLING DE BARBER</p>
-            <h2>
-              GOOD HAIR.
-              <br />
-              <em>GREAT PRESENCE.</em>
-            </h2>
-
+          <div className="about-content">
+            <p className="section-eyebrow">THE ART OF GROOMING</p>
+            <h2>Look Sharp. Feel Confident.</h2>
             <p>
-              Your haircut says a lot about you. Explore popular styles,
-              choose the look you love, and request an appointment with
-              your preferred style already selected.
+              At DARLING DE BARBER, every detail matters. From clean fades and
+              natural cuts to precise beard shaping, our goal is to help you
+              leave looking fresh and feeling confident.
             </p>
             <p>
-              From everyday clean cuts to bold fades and beard grooming,
-              your next look starts here.
+              Choose the style that fits you, then send us your appointment
+              request through WhatsApp.
             </p>
-
-            <a className="text-link" href="#haircuts">
-              EXPLORE THE HAIRCUT COLLECTION →
+            <a href="#haircuts" className="text-link">
+              Discover Our Styles →
             </a>
           </div>
         </section>
 
-        <section className="haircuts-section section" id="haircuts">
-          <div className="section-heading">
-            <p className="eyebrow">YOUR LOOK. YOUR CHOICE.</p>
-            <h2>
-              CHOOSE YOUR <em>HAIRCUT</em>
-            </h2>
-            <p>
-              Browse the photos, read the style names, and select your
-              favourite to start your appointment request.
-            </p>
-          </div>
+        <section className="haircuts-section section-padding" id="haircuts">
+          <SectionHeading
+            eyebrow="THE STYLE COLLECTION"
+            title="Find Your Next Look"
+            description="Explore our haircut styles and select the look you want to book."
+          />
 
-          <div className="haircut-filters" aria-label="Filter haircut styles">
-            {categories.map((item) => (
+          <div className="category-filters" aria-label="Filter haircut styles">
+            {categories.map((category) => (
               <button
-                key={item}
                 type="button"
-                className={
-                  category === item
-                    ? 'haircut-filter active'
-                    : 'haircut-filter'
-                }
-                onClick={() => setCategory(item)}
+                key={category}
+                className={activeCategory === category ? 'active' : ''}
+                aria-pressed={activeCategory === category}
+                onClick={() => setActiveCategory(category)}
               >
-                {item}
+                {category}
               </button>
             ))}
           </div>
 
-          <div className="haircut-grid">
-            {visibleCuts.map((cut) => (
-              <article
-                className={
-                  selectedStyle === cut.name
-                    ? 'haircut-card selected'
-                    : 'haircut-card'
-                }
-                key={cut.name}
-              >
-                <div className="haircut-photo">
+          <div className="haircuts-grid">
+            {visibleHaircuts.map((cut) => (
+              <article className="haircut-card" key={cut.name}>
+                <div className="haircut-image-wrap">
                   <img
                     src={cut.image}
-                    alt={`${cut.name} haircut reference`}
+                    alt={`${cut.name} haircut`}
                     loading="lazy"
                   />
-                  <span className="haircut-category">{cut.category}</span>
                 </div>
 
-                <div className="haircut-info">
+                <div className="haircut-card-content">
+                  <p className="haircut-category">{cut.category}</p>
                   <h3>{cut.name}</h3>
                   <p>{cut.description}</p>
 
-                  <div className="haircut-bottom">
-                    <button
-                      type="button"
-                      className="book-style-button"
-                      onClick={() => chooseCut(cut)}
-                    >
-                      {selectedStyle === cut.name
-                        ? 'SELECTED ✓'
-                        : 'BOOK THIS STYLE ↗'}
-                    </button>
-                  </div>
+                  <button
+                    type="button"
+                    className="haircut-book-button"
+                    onClick={() => chooseHaircut(cut.name)}
+                  >
+                    Book This Style →
+                  </button>
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <OriginalHaircutGallery onRequestStyle={requestOriginalStyle} />
-
-        <LocationSection onLocationChange={setCustomerLocation} />
-
-        <BusinessExtras />
-
-        <section className="booking section" id="booking">
-          <div className="booking-copy">
-            <p className="eyebrow">YOUR NEXT LOOK STARTS HERE</p>
-            <h2>
-              READY FOR A
-              <br />
-              <em>FRESH CUT?</em>
-            </h2>
+        <section className="booking-section section-padding" id="booking">
+          <div className="booking-intro">
+            <p className="section-eyebrow">YOUR NEXT FRESH CUT</p>
+            <h2>Book Your Appointment</h2>
             <p>
-              Choose a regular haircut or select a photo from our original
-              gallery. Enter your preferred date and time to prepare a
-              WhatsApp appointment request.
+              Fill in your details and continue to WhatsApp to send your
+              appointment request directly to DARLING DE BARBER.
             </p>
 
-            <div className="selected-cut-summary">
-              <span>
-                {originalStyleSelection
-                  ? 'YOUR ORIGINAL GALLERY STYLE'
-                  : 'YOUR CHOSEN STYLE'}
-              </span>
-              <h3>
-                {originalStyleSelection
-                  ? originalStyleSelection.name
-                  : selectedCut.name}
-              </h3>
-
-              {originalStyleSelection && (
+            <div className="booking-note">
+              <span className="booking-note-icon">✦</span>
+              <div>
+                <h3>Easy WhatsApp Booking</h3>
                 <p>
-                  Photo reference: {originalStyleSelection.filename}
+                  We will receive your requested service, date and preferred
+                  time so we can confirm availability with you.
                 </p>
-              )}
+              </div>
             </div>
           </div>
 
           <form className="booking-form" onSubmit={submitBooking}>
-            <h3>REQUEST AN APPOINTMENT</h3>
-            <p className="form-intro">
-              Complete your details to continue to WhatsApp. The barber
-              must confirm your appointment.
-            </p>
+            <div className="form-heading">
+              <h3>Appointment Details</h3>
+              <p>Complete the fields below to get started.</p>
+            </div>
 
-            {originalStyleSelection && (
-              <div className="chosen-price">
-                <strong>Selected original gallery style</strong>
-                <p>{originalStyleSelection.name}</p>
-                <p>
-                  Photo reference: {originalStyleSelection.filename}
-                </p>
-
-                <button
-                  type="button"
-                  className="gallery-view-button"
-                  onClick={() => setOriginalStyleSelection(null)}
-                >
-                  CANCEL GALLERY STYLE
-                </button>
-              </div>
-            )}
-
-            <label>
-              Your full name
+            <div className="form-field">
+              <label htmlFor="booking-name">Full name *</label>
               <input
+                id="booking-name"
                 name="name"
-                value={form.name}
-                onChange={updateForm}
-                placeholder="Enter your name"
+                type="text"
+                placeholder="Enter your full name"
+                value={booking.name}
+                onChange={updateBooking}
                 autoComplete="name"
                 required
               />
-            </label>
+            </div>
 
-            <label>
-              Phone number
+            <div className="form-field">
+              <label htmlFor="booking-phone">Phone number *</label>
               <input
+                id="booking-phone"
                 name="phone"
                 type="tel"
-                value={form.phone}
-                onChange={updateForm}
-                placeholder="e.g. 024 000 0000"
+                placeholder="Enter your phone number"
+                value={booking.phone}
+                onChange={updateBooking}
                 autoComplete="tel"
                 required
               />
-            </label>
+            </div>
 
-            <label>
-              Your preferred haircut
+            <div className="form-field">
+              <label htmlFor="booking-service">Choose your service *</label>
               <select
+                id="booking-service"
                 name="service"
-                value={form.service}
-                onChange={updateForm}
+                value={booking.service}
+                onChange={(event) => {
+                  updateBooking(event);
+                  setSelectedCut(event.target.value);
+                }}
+                required
               >
+                <option value="">Select a haircut or service</option>
                 {haircuts.map((cut) => (
                   <option key={cut.name} value={cut.name}>
                     {cut.name}
                   </option>
                 ))}
+                <option value="Consultation">Style consultation</option>
               </select>
-            </label>
-
-            <div className="form-row">
-              <label>
-                Preferred date
-                <input
-                  type="date"
-                  name="date"
-                  value={form.date}
-                  onChange={updateForm}
-                  min={minDate}
-                  required
-                />
-              </label>
-
-              <label>
-                Preferred time
-                <input
-                  type="text"
-                  name="time"
-                  value={form.time}
-                  onChange={updateForm}
-                  placeholder="e.g. 2:30 PM"
-                  autoComplete="off"
-                  required
-                />
-              </label>
             </div>
 
-            <p className="form-intro">
-              Please include AM or PM in your preferred time.
-            </p>
+            <div className="form-row">
+              <div className="form-field">
+                <label htmlFor="booking-date">Preferred date *</label>
+                <input
+                  id="booking-date"
+                  name="date"
+                  type="date"
+                  min={localToday}
+                  value={booking.date}
+                  onChange={updateBooking}
+                  required
+                />
+              </div>
 
-            <p className="form-intro">
-              Location selected above:{' '}
-              {customerLocation.location || 'Not provided'}
-            </p>
+              <div className="form-field">
+                <label htmlFor="booking-time">Preferred time *</label>
+                <select
+                  id="booking-time"
+                  name="time"
+                  value={booking.time}
+                  onChange={updateBooking}
+                  required
+                >
+                  <option value="">Choose a time</option>
+                  <option value="8:00 AM">8:00 AM</option>
+                  <option value="9:00 AM">9:00 AM</option>
+                  <option value="10:00 AM">10:00 AM</option>
+                  <option value="11:00 AM">11:00 AM</option>
+                  <option value="12:00 PM">12:00 PM</option>
+                  <option value="1:00 PM">1:00 PM</option>
+                  <option value="2:00 PM">2:00 PM</option>
+                  <option value="3:00 PM">3:00 PM</option>
+                  <option value="4:00 PM">4:00 PM</option>
+                  <option value="5:00 PM">5:00 PM</option>
+                  <option value="6:00 PM">6:00 PM</option>
+                  <option value="7:00 PM">7:00 PM</option>
+                  <option value="8:00 PM">8:00 PM</option>
+                </select>
+              </div>
+            </div>
 
-            <button
-              type="submit"
-              className="button button-gold submit-button"
-            >
-              CONTINUE TO WHATSAPP ↗
+            <div className="form-field">
+              <label htmlFor="booking-notes">
+                Additional details (optional)
+              </label>
+              <textarea
+                id="booking-notes"
+                name="notes"
+                placeholder="Tell us any special requests..."
+                rows="4"
+                value={booking.notes}
+                onChange={updateBooking}
+              />
+            </div>
+
+            <button type="submit" className="primary-button booking-submit">
+              Continue to WhatsApp ↗
             </button>
 
             <p className="form-disclaimer">
-              This is a booking request, not a confirmed appointment.
+              Your request will open in WhatsApp. Your appointment is not
+              confirmed until the barber replies.
             </p>
           </form>
         </section>
 
-        <section className="closing">
-          <p className="eyebrow">YOUR CHAIR IS WAITING</p>
-          <h2>
-            STAY SHARP. <em>STAY DARLING.</em>
-          </h2>
-          <a href="#haircuts" className="button button-gold">
-            FIND YOUR NEXT CUT ↗
+        <section className="hours-section section-padding" id="hours">
+          <SectionHeading
+            eyebrow="PLAN YOUR VISIT"
+            title="Opening Hours"
+            description="Contact us to confirm availability before travelling."
+          />
+
+          <div className="hours-list">
+            {openingHours.map((item) => (
+              <div className="hours-row" key={item.day}>
+                <span>{item.day}</span>
+                <span>{item.hours}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div id="location">
+          <LocationSection />
+        </div>
+
+        <BusinessExtras />
+
+        <section className="final-cta section-padding">
+          <p className="section-eyebrow">READY FOR A FRESH LOOK?</p>
+          <h2>Your Next Cut Starts Here.</h2>
+          <p>Choose your style and send us your booking request today.</p>
+          <a href="#booking" className="primary-button">
+            Book Your Appointment
           </a>
         </section>
       </main>
 
-      <footer className="footer">
-        <a className="brand" href="#home">
-          <span className="brand-mark">D</span>
-          <span>
-            DARLING DE <b>BARBER</b>
-          </span>
+      <footer className="site-footer">
+        <a href="#home" className="footer-brand">
+          DARLING DE BARBER
         </a>
-
-        <p>Crafted for confidence. Built around your style.</p>
-        <a href="#home" className="back-top">
-          BACK TO TOP ↑
+        <p>PRECISION · STYLE · CONFIDENCE</p>
+        <p>
+          © {new Date().getFullYear()} DARLING DE BARBER. All rights reserved.
+        </p>
+        <a
+          href={makeWhatsAppLink('Hello DARLING DE BARBER! I would like to enquire about a haircut.')}
+          target="_blank"
+          rel="noreferrer"
+          className="footer-whatsapp"
+        >
+          Contact us on WhatsApp
         </a>
-
-        <div className="footer-bottom">
-          <span>© {new Date().getFullYear()} DARLING DE BARBER</span>
-          <span>LOOK SHARP. FEEL CONFIDENT.</span>
-        </div>
       </footer>
     </div>
   );
